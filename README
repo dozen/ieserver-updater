@@ -1,0 +1,21 @@
+DDNS(ieserver)の自動更新用スクリプトです。
+$objectsにIPアドレスが変動した場合に更新したいものを配列で追加し、cronで定期的に実行してください。
+同時に更新する数に制限はありませんが、並列アクセスはしないので多すぎると時間がかかるかもしれません。
+PHPのライブラリとしてcURL, memcachedがインストールされていることが前提です。memcachedでも動きますが永続性のあるキーバリューストアの方がおすすめ(kumofsとか)。
+
+cronの設定例:
+5,15,25,35,45,55 * * * * /usr/local/ieserver_updater/ie_server.php
+
+$objectsの記入例:
+$objects = array(
+  array(
+    'ユーザ名',
+    'ドメイン',
+    'パスワード'
+  ),
+  array(
+    'dozen',
+    'dip.jp',
+    'foobar'
+  )
+);
