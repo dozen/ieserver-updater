@@ -4,7 +4,7 @@ $objectsにIPアドレスが変動した場合に更新したいものを配列�
 PHPのライブラリとしてcURL, memcachedがインストールされていることが前提です。memcachedでも動きますが永続性のあるキーバリューストアの方がおすすめ(kumofsとか)。
 
 cronの設定例:
-5,15,25,35,45,55 * * * * /usr/local/ieserver_updater/ie_server.php
+5,15,25,35,45,55 * * * * /usr/local/ieserver-updater/ie_server.php
 
 $objectsの記入例:
 $objects = array(
