@@ -2,9 +2,9 @@
 
 <?php
 //Memcachedを利用する場合はtrueにしてください。
-define(USEMEMCACHED, false);
-define(MEMCACHEDHOST, 'localhost');
-define(MEMCACHEDPORT, 11211);
+define(USE_MEMCACHED, false);
+define(MEMCACHED_HOST, 'localhost');
+define(MEMCACHED_PORT, 11211);
 
 $objects = array(
     array(
@@ -14,16 +14,16 @@ $objects = array(
     )
 );
 
-define(IESERVERURL, 'https://ieserver.net/cgi-bin/dip.cgi');
+define(IESERVER_URL, 'https://ieserver.net/cgi-bin/dip.cgi');
 
 //IPアドレスの取得
 $ip = file_get_contents('http://ifconfig.me/ip');
 $ip = trim($ip[0]);
 
 //IPアドレスが変更されているか調べる
-if (USEMEMCACHED) {
+if (USE_MEMCACHED) {
   $cache = new memcached();
-  $cache->addServer('localhost', 11211);
+  $cache->addServer(MEMCACHED_HOST, MEMCACHED_PORT);
   $cachedip = $cache->get('ie_server:myipaddress');
 } else {
   $cachedipfile = __DIR__ . 'myipaddress';
@@ -39,7 +39,7 @@ if ($cachedip != $ip) {
     $curl = curl_init();
     $post = 'username=' . $line[0] . '&domain=' . $line[1] . '&password=' . $line[2] . '&updatehost=1';
     $options = array(
-        CURLOPT_URL => IESERVERURL,
+        CURLOPT_URL => IESERVER_URL,
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_POST => 1,
@@ -49,7 +49,7 @@ if ($cachedip != $ip) {
     curl_exec($curl);
     curl_close($curl);
   }
-  if (USEMEMCACHED) {
+  if (USE_MEMCACHED) {
     $cache->set('ie_server:myipaddress', $ip);
   } else {
     $fp = fopen($cachedipfile, 'w');
