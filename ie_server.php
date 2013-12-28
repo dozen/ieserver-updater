@@ -17,8 +17,7 @@ $objects = array(
 define('IESERVER_URL', 'https://ieserver.net/cgi-bin/dip.cgi');
 
 //IPアドレスの取得
-$ip = file_get_contents('http://ifconfig.me/ip');
-$ip = trim($ip[0]);
+$ip = trim(file_get_contents('http://ifconfig.me/ip'));
 
 //IPアドレスが変更されているか調べる
 if (USE_MEMCACHED) {
