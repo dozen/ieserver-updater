@@ -14,7 +14,7 @@ $objects = array(
     )
 );
 
-define(IESERVER_URL, 'https://ieserver.net/cgi-bin/dip.cgi');
+define('IESERVER_URL', 'https://ieserver.net/cgi-bin/dip.cgi');
 
 //IPアドレスの取得
 $ip = file_get_contents('http://ifconfig.me/ip');
